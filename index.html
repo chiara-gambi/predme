@@ -1,0 +1,494 @@
+<html>
+<head>
+	<script src="jquery/jquery-3.0.0.min.js"></script>
+	<script src="jquery/jquery-ui.min.js"></script>
+
+	<script src="trial_data/trialsA.js"></script>
+	<script src="trial_data/trialsB.js"></script>
+	<script src="trial_data/training.js"></script>
+	<!-- That is the trial data in JSON format. Loads a var named trials -->
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js"></script>
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable = no">
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<link rel="apple-touch-icon" href="images/uoe2.png">
+	<!-- The above three lines stop the screen from being zoomed in on iPad, lets it be used app-style and sets up an icon for the app. -->
+
+
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+	<!-- Main Bootstrap CSS for layout and stuff like that. -->
+	<link rel="stylesheet" href="index.css"/>
+	<!-- Extra CSS fiddling -->
+
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+<script>
+  	// Prevents dragging the screen on iPad
+    document.body.addEventListener('touchmove', function(event) {
+      console.log(event.source);
+        event.preventDefault();
+    }, false);
+
+    window.onresize = function() {
+      $(document.body).width(window.innerWidth).height(window.innerHeight);
+    }
+
+    $(function() {
+      window.onresize();
+    });
+  </script>
+
+ <!--  <script>
+  // adds message to window top for psiturk to listen to
+  window.top.postMessage("all_done|attempt","*")
+  </script> -->
+
+  <div class="slide" id="consent">
+		<div id="container-instructions">
+			<h1>Project Title: Predictability and Mutual Exclusivity in Word Learning</h1>
+            <h2>Information and Consent Form</h2>
+			<hr>
+
+			<div class="instructions well">
+
+	   		 <p>
+		    	You are being invited to take part in a research study looking at how children learn new words. There is increasing evidence that an ability to guess what people will say next helps children to learn new words. We want to know if making inaccurate guesses can sometimes help children learn more quickly, by comparing their guesses to what they actually hear. We are also testing adults on the same task for comparison.
+	   		 </p>
+
+	   		 <p>
+		    	The research is being carried out by the University of Edinburgh and has been approved by the ethics committee of the Department of Psychology (Ethics Approval Number 124-1617/2). It is funded by the Leverhulme trust.
+		    	This online task has been implemented by Dr. Chiara Gambi. The project is being supervised by Dr. Hugh Rabagliati and Prof. Martin Pickering.
+				See www.weescience.ppls.ed.ac.uk and www.facebook.com/weescience for more info. You can contact the researcher in charge of this project at g.chiara86@gmail.com
+	   		 </p>	
+
+	   		 <p>
+		    	The study consists of one activity which takes around 15-to-20 minutes to complete. In it, you will listen to a series of short, simple sentences, while looking at two pictures displayed on the screen. After each sentence, you will hear an instruction to click on or tap one of the pictures and we will record your choice. Sometimes, the sentence will contain a new word. After a 5 minute break, you will again hear instructions to tap on the picture corresponding to a new word, and you will be asked to select one of three pictures displayed on the tablet screen. Again, your choice will be recorded. 
+
+	   		 </p>
+	    
+	    	<p>
+	    		You have the right to stop your participation at any time. You can also decide you want your data withdrawn or destroyed at any time. This study has no known risks. Its benefit is that it contributes to scientific knowledge. We ask you to provide some basic information about yourself: your gender, age and the main languages you speak. This information will only be used in this study as part of the analysis. The data collected will be made confidential using numerical coding for each participant, No one outside of the study will see your personal information and any identifying information will be kept out of the final write-up and any presentations. The personal information will be destroyed soon after the project is finished.
+        	</p>
+
+        	<p>
+	   		 	<b>INFORMED CONSENT.</b> If you would like to take part in this study, please click on the “I agree” button below. By clicking on this button you confirm that you have understood the information provided above and consent to take part in this study voluntarily. If you would like to decline the invitation to take part in this study, please click on the “No, thanks” button.
+	   		 </p>
+
+	    	</div>
+
+			<hr>
+
+
+    		<div class="instructionsnav">
+        		<div class="row">
+            		<div class="col-xs-2">
+            	<button type="button" class="btn btn-block" onClick="this.blur(); showNewSubj()">
+                	I agree </button>
+            		</div>
+            	<div class="col-xs-8">
+            		</div>
+            	<div class="col-xs-2">
+                	<button type="button" class="btn btn-block" onClick="this.blur(); terminate()">
+                	No, thanks </button>
+            	</div>
+        		</div>
+    		</div>
+
+		</div>
+
+	</div>
+
+
+<!-- This slide is the first one shown, to get subject info. -->
+
+	<div class="slide" id="new_subject">
+		<div class="col-xs-4">
+			<img src="images/uoe.png" class='img-responsive'>
+		</div>	  
+
+		<div class='col-xs-offset-2 col-xs-6 col-xs-offset-1'>
+
+		<p>
+				Please click on the Generate Button. This assigns you a unique numerical code so we can later anonymise your data.
+			</p>
+			
+			<form class="form-inline">
+				<div class="form-group">
+					<div class="input-group" style='width:270px'>
+						<input type="text" class="form-control" id="subject_id" placeholder="Subject ID">
+					</div>
+				</div>
+				<button type="button" class="btn btn-primary" onClick="fill_field()">Generate</button>
+
+			</form>
+
+			<p>
+				Please click on the Assign Version Button. This assigns you to one version of the experiment. If you don't click this button, or you click it more than once, you will not be able to complete the study and receive credits for it.
+			</p>
+
+			<form class="form-inline">
+				<div class="form-group">
+					<div class="input-group" style='width:270px'>
+						<input type="text" class="form-control" id="version" placeholder="Version">
+					</div>
+				</div>
+				<button type="button" class="btn btn-primary" onClick="fill_field_list()">Assign Version</button>
+
+			</form>
+
+
+<!-- This neext bit about initials is only necessary if we direct participants from an external website (e.g., SONA) to the app, so we can later match data to participants -->
+			<p>
+				Please provide the following information about yourself. Start by typing in your initials. This is necessary so we can later assign you credits for completing this task.
+			</p>
+
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" id="initials" placeholder="Initials" >
+				</div>
+			</div>		
+
+			 <p>
+				Please enter your date of birth below.
+			</p>
+			<div class="form-group">
+				<div class="input-group">
+					<input type="date" class="form-control" id="date_of_birth" placeholder="Date of birth">
+				</div>
+			</div>			
+			<p>
+				Please select your gender.
+			</p>
+			<form class="form-inline">
+				<div class="input-group">
+					<div class="row">
+						<div class="col-xs-12">
+							<input type="checkbox" checked data-toggle="toggle" id="gender" data-on="Male" data-off="Female" data-width="176px">
+
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<!-- <form class="form-inline">
+				<div class="input-group">
+					<div class="row">
+						<div class="col-xs-12">
+							<input type="checkbox" checked data-toggle="toggle" id="version" data-on="ListA" data-off="ListB" data-width="176px">
+
+						</div>
+					</div>
+				</div>
+			</form>
+ -->
+			<!-- <div class="form-group">
+				<div class="input-group">
+					
+					<input type="text" class="form-control" id="num_siblings" placeholder="Number of siblings" style="width:50%">
+					<input type="text" class="form-control" id="birth_order" placeholder="Birth order" style="width:50%">
+
+				</div>
+			</div>
+		 -->
+
+			<!-- <div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" id="ethnicity" placeholder="Ethnicity" >
+				</div>
+			</div>
+
+ -->
+			<p>
+				Please provide the following information about your language background.
+			</p>
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" id="native_lang" placeholder="Native language" >
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" id="other_langs" placeholder="Other languages" >
+				</div>
+			</div>
+
+
+			<!-- <div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" id="parental_occ" placeholder="Parent occupation(s)" >
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" id="dev_info" placeholder="Developmental information" >
+				</div>
+			</div>
+ -->
+			<button type="button" style='width:357px' class="btn btn-block" id="beforeStudy" onClick="this.blur(); do_training()">Start</button>
+
+		</div>
+
+	</div>
+
+
+
+<!-- This is the second slide to be shown, with the dot training sequences. -->
+
+	<div class="slide" id="training">
+		<div id="container-instructions2">
+			<h1>Instructions</h1>
+
+			<hr>
+
+			<div class="instructions well">
+
+	   		 <p>
+		    	Welcome to the experiment! You will need to listen to sounds as part of this experiment, so please make sure you are in a quiet space and/or have headphones avaialable. Also make sure your speakers are not on mute.
+	   		 </p>
+
+	   		 <p>
+		    	This experiment is in two parts. Below you will find instructions on how to complete the first part of the task. It will take about 10 minutes. After this, you will have a 5 minute break. Then, you'll receive instructions on how to complete the second (and final) part of the task (5 minutes). In both parts, you will listen to spoken commands, asking you to tap (or click) on a particular picture.
+	   		 </p>	
+
+	   		 <p>
+		    	Please, be advised that this experiment has been designed for children between the ages of 2 and 5. It contains lots of cartoons and it proceeds <b>VERY SLOWLY</b>. You will understand the commands much more quickly than a child would, and you will likely know the answer before the spoken instruction is over. Still, the site will NOT allow you to select an answer until you have listened to the instruction in full. Please be patient. 
+	   		 </p>
+	    
+	    	<p>
+	    		<b>Instructions for Part 1.</b> In the first part of the task, you will see the picture of a well-known children cartoon character (Peppa Pig) at the top of the screen. Please click or tap on Peppa Pig to listen to the instruction. You can listen to the instruction more than once if you need to, but please try to pay attention the first time round. Once the instruction stops playing, please select an appropriate picture amongst the two pictures displayed at the bottom of the screen. Simply tap or click on one of the pictures to select it. It will bounce, and then the experiment will move on to the next page. Again, don't forget to click or tap on Peppa to hear the next instruction. 
+        	</p>
+
+        	<p>
+	   		 	<b>Please move to a quiet space and put headphones on now.</b>	
+	   		 </p>
+
+        	<p>
+        		This task has been designed by Dr. Chiara Gambi (University of Edinburgh). For any issues please contact: g.chiara86@gmail.com. 
+        	</p>
+	    	</div>
+
+			<hr>
+
+
+    		<div class="instructionsnav">
+        		<div class="row">
+            		<div class="col-xs-2">
+            	<!-- no previous button on first screen -->
+            		</div>
+            	<div class="col-xs-8">
+            		</div>
+            	<div class="col-xs-2">
+                	<button type="button" class="btn btn-block" onClick="this.blur(); complete_training()">
+                	Got it! </button>
+            	</div>
+        		</div>
+    		</div>
+
+		</div>
+
+	</div>
+
+<!-- Third slide, shown after the training. Just has a "Begin!" button to start the trials. -->
+
+	<div class="slide" id="confirm">
+		<div class='button-container' height='200px' style="height:100px">
+			<button type="button" style="height:100px" class="btn btn-block" onClick="this.blur(); confirm()">Begin!</button>
+		</div>	
+	</div>
+
+<!-- Fourth slide, which contains all the learning trials. This has HTML inserted into it by JavaScript. -->
+
+	<div class="slide" id="stage">
+		
+		<div id="top_container" style="text-align:center">
+			<img id="speaker_img" src="">
+			<!-- <button type="image" id="speaker_img"> -->
+		</div>
+
+		<div id ="options_container">
+			<img class="choice" id="left" src="">
+			<img class="choice" id="right" src="">
+		</div>
+
+		<audio id="sound_player" preload>
+			<source src="mp3/audio.mp3" type="audio/mp3">
+			<source src="ogg/audio.ogg" type="audio/ogg">
+		</audio>
+	</div>
+
+<!-- Fifth slide with the dot training sequences as interlude -->
+
+	<div class="slide" id="interlude_button">
+		<p>
+			Please click on the button to proceed.
+		</p>
+	<div class='button-container' height='200px' style="height:100px">
+			<button type="button" style="height:100px" class="btn btn-block" onClick="this.blur(); show_interlude_instructions()">Have a break!</button>
+		</div>	
+	</div> 
+
+	<div class="slide" id="interlude_instructions">
+		<div id="container-instructions">
+			<h1>Instructions</h1>
+
+			<hr>
+
+			<div class="instructions well">
+
+	   		 <p>
+		    	Well done! You have completed the first part of the task. During the break, you will watch a short video clip from the children TV series Peppa Pig. Please watch the video carefully because you will be asked to answer a few questions on it once it stops playing (NOTE: you won't be allowed to watch the video again!). The questions are nice and straightforward but we do care about your answers, so please take them seriously. To provide an aswer, just type it in the box provided.
+	   		 </p>
+	    
+	    	<p>
+	    		NOTE: only once you have answered all 4 questions, will you be allowed to submit them using the SUBMIT button at the bottom of the page.
+        	</p>
+
+	    	</div>
+
+			<hr>
+
+
+    		<div class="instructionsnav">
+        		<div class="row">
+            		<div class="col-xs-2">
+            	<!-- no previous button on first screen -->
+            		</div>
+            	<div class="col-xs-8">
+            		</div>
+            	<div class="col-xs-2">
+                	<button type="button" class="btn btn-block" onClick="this.blur(); do_interlude()">
+                	Got it! </button>
+            	</div>
+        		</div>
+    		</div>
+
+		</div>
+
+	</div>
+
+
+	<div class="slide" id="interlude">
+	<div id="video_container" style="text-align:center">
+			<video id="video" width="768" height="432" poster="images/stims/Peppa.png">
+				<source src="video/peppa.mp4" type="video/mp4">
+				<source src="webm/peppa.webm" type="video/webm">
+			</video> <!-- width="640" height="360" poster="images/movie_play_blue.png"></video>-->
+			<!--<div id="video-overlay" src="" width="260"> hey there </div>-->
+	</div>
+	<div id="countdown"> Video ends after <span>XX</span> seconds.</div>
+    <div id ="questions_container" style="display:none">
+			<form name="theform">
+				1. In this episode of Peppa Pig, Miss Rabbit is ill and cannot go to work, so Mummy Rabbit and other characters have to take over. How many of Miss Rabbit's jobs are shown in this clip? Please type your answer in the field below:<br>
+				<input id="input1" type="text" onKeyup="checkform()" /> <br>
+				2. Peppa Pig talks on the phone to her dad, and asks him to take over selling ice creams from the ice cream van. But the ice cream has melted! Which ice cream flavour does Daddy Pig serve as "ice cream soup"? Please type your answer in the field below:<br>
+				<input id="input2" type="text" onKeyup="checkform()" /> <br>
+				3. Towards the end of the clip, Mummy Sheep's car breaks down so she calls the mechanic. But he was already busy doing one of Miss Rabbit's jobs. Which one? Please type your answer in the field below:<br>
+				<input id="input3" type="text" onKeyup="checkform()" /> <br>
+				4. At the very end, why is Miss Rabbit relieved that she can go back to work tomorrow? Think about who was left at home with her, while Mummy Rabbit was at the supermarket check-out. Please type your answer in the field below:<br>
+				<input id="input4" type="text" onKeyup="checkform()" /> <br>
+			</form>
+	<button id="question_button" type="button" disabled="disabled" style="height:80px;width:300px" class="btn btn-block" onClick="this.blur(); start_ret()">Submit your answers</button>
+	</div>
+	</div>
+
+	<!-- <div class="slide" id="question_button">
+	<div class='button-container' height='200px' style="height:100px">
+			<button type="button" style="height:100px" class="btn btn-block" onClick="this.blur(); start_ret()">Submit answers</button>
+		</div>	
+	</div>	
+	</div> --> 
+
+	<div class="slide" id="instructions_ret">
+		<div id="container-instructions">
+			<h1>Instructions</h1>
+
+			<hr>
+
+			<div class="instructions well">
+
+	   		 <p>
+		    	Well done for submitting your answers! You are almost there. You just need to complete the second (and final) part of the task (5 minutes). As in the first part, you will see Peppa Pig at the top of the screen. Click or tap on Peppa to listen to the instruction. This time, the instruction will be shorter, and you need to select the appropriate picture amongst THREE pictures that will appear at the bottom of the screen. Otherwise, everything else will be the same as during the first part.  
+	   		 </p>
+	    
+	    	<p>
+	    		You can start as soon as you are ready.
+        	</p>
+
+	    	</div>
+
+			<hr>
+
+
+    		<div class="instructionsnav">
+        		<div class="row">
+            		<div class="col-xs-2">
+            	<!-- no previous button on first screen -->
+            		</div>
+            	<div class="col-xs-8">
+            		</div>
+            	<div class="col-xs-2">
+                	<button type="button" class="btn btn-block" onClick="this.blur(); showButton_ret()">
+                	Got it! </button>
+            	</div>
+        		</div>
+    		</div>
+
+		</div>
+
+	</div>
+
+
+<!-- Sixth slide, shown after learning and interlude. Just has a "Begin!" button to start the retention trials. -->
+
+	<div class="slide" id="confirm_ret">
+		<div class='button-container' height='200px' style="height:100px">
+			<button type="button" style="height:100px" class="btn btn-block" onClick="this.blur(); confirm_ret()">Let's play again!</button>
+		</div>	
+	</div>
+
+<!-- Seventh slide, which contains all the retention trials. This has HTML inserted into it by JavaScript. -->
+
+	<div class="slide" id="stage_ret">
+		
+		<div id="top_container_ret" style="text-align:center">
+			<img id="speaker_img_ret" src="">
+			<!-- <button type="image" id="speaker_img"> -->
+		</div>
+
+		<div id ="options_container_ret">
+			<img class="choice_ret" id="left_ret" src="">
+			<img class="choice_ret" id="center_ret" src="">
+			<img class="choice_ret" id="right_ret" src="">
+		</div>
+
+		<audio id="sound_player" preload>
+			<source src="mp3/audio.mp3" type="audio/mp3">
+			<source src="ogg/audio.ogg" type="audio/ogg">
+		</audio>
+	</div>
+
+
+<!-- Final slide, with an "All done!" screen. -->
+
+	<div class="slide" id="finished" style="padding-top:20%;text-align:center;background:#041E42;color:white;font-size:100px">
+		<p>All done!</p>
+		<br><br>
+		<img src="images/dots/dot_smiley.jpg">
+		<br><br><br><br>
+	</div>
+
+	<script src="main.js"></script>
+	<!-- This loads the main JavaScript functions and also calls up the new subject slide, allowing the whole thing to begin. -->
+
+</body>
+</html>
