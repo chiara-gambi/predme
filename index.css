@@ -1,0 +1,174 @@
+body {
+	margin: 0;
+	font-size: 14px;
+	line-height: 15px;
+	text-align: center;
+}
+
+#speaker_img {
+	margin-top: 35px;
+}
+
+
+#stage {
+    background: red; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(white, grey); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(white, grey); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(white, grey); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(white, grey); /* Standard syntax */
+}
+
+#top_container {
+	width:450px;
+	height:300px;
+
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
+/*button.image {
+	background: url();
+	width:450px;
+	height:300px;
+}*/
+
+#left {
+	float:left;
+	margin-left:50px;
+	margin-top: 100px;
+
+}
+
+#right {
+	float:right;
+	margin-right:50px;
+	margin-top: 100px;
+
+	transform: scaleX(-1);
+	/* Flip right hand image horizontally so they are both facing "towards" the teacher.
+	*/
+}
+
+.col-xs-6 {
+	padding-top: 150px;
+	padding-left: 70px;
+}
+	
+.col-xs-4 {
+	padding-top: 200px;
+	height: 100%;
+	background: #041E42;
+}
+
+.btn {
+	background: #041E42;
+	color: white;
+	border-radius: 0;
+}
+
+.form-control {
+	width:auto;
+	display:inline-block;
+	border-radius: 0;
+}
+
+.input-group {
+	width: 357px;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn:active, .btn:hover{
+	background: #041E42;
+	color: white;
+}
+
+.slide {
+	width: 100%;
+	height: 100%;
+	display: none;
+	position: absolute;
+}
+
+.button-container {
+	width:50%;
+	height:50%;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.btn-contained {
+	font-size: 20px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 200px;
+	height: 100px;
+	transform: translate(-50%, -50%);	
+}
+
+.pic-container {
+	width:100%;
+	padding-top:15%;
+}
+
+.pic {
+	width: 100%;
+}
+
+#speaker_img_ret {
+	margin-top: 35px;
+}
+
+#stage_ret {
+    background: red; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(white, grey); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(white, grey); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(white, grey); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(white, grey); /* Standard syntax */
+}
+
+#top_container_ret {
+	width:450px;
+	height:300px;
+
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
+/*button.image {
+	background: url();
+	width:450px;
+	height:300px;
+}*/
+
+#left_ret {
+	float:left;
+	margin-left:50px;
+	margin-top: 100px;
+
+}
+
+#center_ret {
+	display: inline-block;
+	margin-top: 100px;
+
+}
+
+#right_ret {
+	float:right;
+	margin-right:50px;
+	margin-top: 100px;
+
+	transform: scaleX(-1);
+	/* Flip right hand image horizontally so they are both facing "towards" the teacher.
+	*/
+}

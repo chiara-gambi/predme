@@ -853,7 +853,7 @@ function saveData(){
    $.ajax({
       type:'post',
       cache: false,
-      url: 'http://blake2.ppls.ed.ac.uk/~s1555917/chiara/savedata.php', // this is the path to the above PHP script
+      url: 'http://blake2.ppls.ed.ac.uk/~s1555917/chiarapred/savedata.php', // this is the path to the above PHP script
       data: {filename: data.subject_id + '_data.csv', filedata: results},
       success: function(){
             console.log("data saved");
@@ -868,7 +868,7 @@ function saveData_ret(){
    $.ajax({
       type:'post',
       cache: false,
-      url: 'http://blake2.ppls.ed.ac.uk/~s1555917/chiara/savedata.php', // this is the path to the above PHP script
+      url: 'http://blake2.ppls.ed.ac.uk/~s1555917/chiarapred/savedata.php', // this is the path to the above PHP script
       data: {filename: data_ret.subject_id + '_dataret.csv', filedata: results_ret}
    });
 }
